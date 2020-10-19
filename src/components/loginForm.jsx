@@ -23,6 +23,7 @@ class LoginForm extends Form {
             label="Username"
             onChange={this.handleChange}
             error={this.state.errors.username}
+            type="text"
           />
           <Input
             name="password"
@@ -30,6 +31,7 @@ class LoginForm extends Form {
             label="Password"
             onChange={this.handleChange}
             error={this.state.errors.password}
+            type="password"
           />
           <button disabled={this.validate()} className="btn btn-primary">
             Login
