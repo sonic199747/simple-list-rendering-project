@@ -61,6 +61,11 @@ class Movies extends Component {
         </div>
         <div className="col">
           <br />
+          <Link to="/movies/new">
+            <button className="btn btn-primary">New Movie</button>
+          </Link>
+          <br />
+          <br />
           <p>
             {this.state.movies.length === 0
               ? "There are no movies in the database."
