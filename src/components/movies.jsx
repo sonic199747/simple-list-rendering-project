@@ -13,7 +13,8 @@ class Movies extends Component {
     pageSize: 4,
     currentPage: 1,
     genres: [],
-    selectedGenre: [],
+    selectedGenre: null,
+    search: "",
   };
 
   componentDidMount() {
@@ -30,12 +31,34 @@ class Movies extends Component {
   };
 
   handleGenreSelect = (genre) => {
-    this.setState({ selectedGenre: genre, currentPage: 1 });
-    console.log(this.state.selectedGenre);
+    this.setState({ selectedGenre: genre, search: "", currentPage: 1 });
+  };
+
+  handleSearch = (e) => {
+    this.setState(
+      {
+        search: e.target.value,
+        selectedGenre: null,
+        currentPage: 1,
+      },
+      () => {
+        var filtered = this.state.movies;
+        if (this.state.search) {
+          filtered = filtered.filter((i) =>
+            i.title.toUpperCase().startsWith(this.state.search.toUpperCase())
+          );
+        } else if (this.state.selectedGenre && this.state.selectedGenre._id) {
+          filtered = filtered.filter(
+            (i) => i.genre._id === this.state.selectedGenre._id
+          );
+        }
+        this.setState({ movies: filtered });
+        console.log(this.state.search);
+      }
+    );
   };
 
   render() {
-    // const count = this.state.movies.length;
     const filtered =
       this.state.selectedGenre && this.state.selectedGenre._id
         ? this.state.movies.filter(
@@ -71,6 +94,19 @@ class Movies extends Component {
               ? "There are no movies in the database."
               : "Showing " + filtered.length + " movies in the database."}
           </p>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default"
+              placeholder="Search..."
+              name="search"
+              value={this.state.search}
+              onChange={this.handleSearch}
+            />
+          </div>
+
           <table className="table">
             <thead>
               <tr>
