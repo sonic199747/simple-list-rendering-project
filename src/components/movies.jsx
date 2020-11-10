@@ -53,7 +53,7 @@ class Movies extends Component {
           );
         }
         this.setState({ movies: filtered });
-        console.log(this.state.search);
+        
       }
     );
   };
